@@ -13,6 +13,12 @@ class RectangularSection(Section):
         self.b = b
         self.h = h
 
+        self._area = self._calculate_area()
+        self._perimeter = self._calculate_perimeter()
+        self._ix = self._calculate_ix()
+        self._iy = self._calculate_iy()
+        self._it = self._calculate_it()
+
     # -------------------------------- Data validation --------------------------------
     @property
     def b(self):
@@ -41,24 +47,19 @@ class RectangularSection(Section):
             self._h = value
 
     # -------------------------------- Methods --------------------------------
-    @property
-    def area(self) -> float:
+    def _calculate_area(self) -> float:
         return self.b * self.h
 
-    @property
-    def perimeter(self) -> float:
+    def _calculate_perimeter(self) -> float:
         return 2 * (self.b + self.h)
 
-    @property
-    def ix(self) -> float:
+    def _calculate_ix(self) -> float:
         return self.b * self.h ** 3 / 12
 
-    @property
-    def iy(self) -> float:
+    def _calculate_iy(self) -> float:
         return self.h * self.b ** 3 / 12
 
-    @property
-    def it(self, max_iter=10, tol: float = 1e-4) -> float:
+    def _calculate_it(self, max_iter=10, tol: float = 1e-4) -> float:
         b = min(self.b, self.h)
         h = max(self.b, self.h)
         s = 0
@@ -74,4 +75,23 @@ class RectangularSection(Section):
             i += 1
         return v1
 
+    # -------------------------------- Properties --------------------------------
+    @property
+    def area(self) -> float:
+        return self._area
 
+    @property
+    def perimeter(self) -> float:
+        return self._perimeter
+
+    @property
+    def ix(self) -> float:
+        return self._ix
+
+    @property
+    def iy(self) -> float:
+        return self._iy
+
+    @property
+    def it(self) -> float:
+        return self._it
